@@ -57,6 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,6 +82,7 @@
     <ClInclude Include="CCSBase.h" />
     <ClInclude Include="CCSErrorDefines.h" />
     <ClInclude Include="CCSInetAddress.h" />
+    <ClInclude Include="CCSLock.h" />
     <ClInclude Include="CCSOSMemory.h" />
     <ClInclude Include="CCSOSProcess.h" />
     <ClInclude Include="CCSOSSemaphore.h" />
@@ -88,6 +90,7 @@
     <ClInclude Include="CCSPlantform.h" />
     <ClInclude Include="CCSSocket.h" />
     <ClInclude Include="CCSTimeStamp.h" />
+    <ClInclude Include="CCSTimeValue.h" />
     <ClInclude Include="CCSTrace.h" />
     <ClInclude Include="CCSUtilDefines.h" />
     <ClInclude Include="resource.h" />
@@ -97,9 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCSInetAddress.cpp" />
+    <ClCompile Include="CCSLock.cpp" />
     <ClCompile Include="CCSOSSemaphore.cpp" />
     <ClCompile Include="CCSSocket.cpp" />
     <ClCompile Include="CCSTimeStamp.cpp" />
+    <ClCompile Include="CCSTimeValue.cpp" />
     <ClCompile Include="CCSTrace.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

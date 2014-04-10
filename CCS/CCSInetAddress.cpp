@@ -1,6 +1,5 @@
 #include "CCSInetAddress.h"
 
-
 // ×î´ó¶Ë¿Ú 65536
 const WORD MAX_PORT_NUM = 0Xffff;
 
@@ -45,5 +44,15 @@ CCSResult CCCSInetAddress::Set( const char* phostnameAndPort )
 		return CCS_ERROR_NULL_POINTER;
 	}
 
+	return 0;
+}
 
+CCSResult CCCSInetAddress::Set( DWORD dwIP )
+{
+	return 0;
+}
+
+CCSResult CCCSInetAddress::SetIP( const char* pszIP )
+{
+	return 0;
 }

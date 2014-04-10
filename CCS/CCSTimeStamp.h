@@ -19,6 +19,8 @@ public:
 
 	CCCSTimeStamp( const CCCSTimeStamp& src );
 
+	CCCSTimeStamp( const timeval& tv );
+
 	~CCCSTimeStamp();
 
 public:
@@ -33,6 +35,8 @@ public:
 
 	// 返回时间戳的微秒表示，base time是1970年1月1日0时
 	TTimeValue GetMicroseconds() const;
+
+	DWORD GetMSSeconds() const;
 
 	// 现在的时间与时间戳所表示的时间的差值
 	TTimeDiff GetElapsed() const;
@@ -53,6 +57,8 @@ public:
 		UINT32 fileTimeHigh );
 
 	static TTimeValue Resolution();
+
+	static CCCSTimeStamp GetCurTime();
 
 	//////////////////////////////////////////////////////////////////////////
 	// 运算符重载

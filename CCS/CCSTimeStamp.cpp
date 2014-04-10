@@ -17,6 +17,11 @@ CCCSTimeStamp::CCCSTimeStamp( const CCCSTimeStamp& src )
 	m_ts = src.m_ts;
 }
 
+CCCSTimeStamp::CCCSTimeStamp( const timeval& tv )
+{
+	m_ts = tv.tv_sec * 1000 * 1000 + tv.tv_usec * 1000;
+}
+
 CCCSTimeStamp::~CCCSTimeStamp()
 {
 }
@@ -203,5 +208,28 @@ CCCSTimeStamp& CCCSTimeStamp::operator=( TTimeValue tv )
 	m_ts = tv;
 
 	return *this;
+}
+
+DWORD CCCSTimeStamp::GetMSSeconds() const
+{
+	return m_ts / 1000;
+}
+
+CCCSTimeStamp CCCSTimeStamp::GetCurTime()
+{
+#ifdef CCS_WIN32
+	FILETIME ftime;
+	::GetSystemTimeAsFileTime( &ftime );
+
+	return CCCSTimeStamp::FromFileTime( (UINT32)ftime.dwLowDateTime,
+		(UINT32)ftime.dwHighDateTime );
+#elif defined( CCS_LINUX)		// linux  й╣ож
+	timeval tvCur;
+	::gettimeofday( 
+		&tvCur, 
+		NULL );
+
+	return CCCSTimeStamp( tvCur );
+#endif
 }
 

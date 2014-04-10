@@ -22,6 +22,12 @@
     <Filter Include="Time">
       <UniqueIdentifier>{51904a2a-8ef6-49b3-9243-5b0702d55fca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plantform\Header Files">
+      <UniqueIdentifier>{9d9c2bf6-2131-4a70-93c1-5401b08fc92f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plantform\Source Files">
+      <UniqueIdentifier>{6814278e-44b9-41af-89aa-ef16c3e45833}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -42,26 +48,32 @@
     <ClInclude Include="CCSUtilDefines.h">
       <Filter>Common Defines</Filter>
     </ClInclude>
-    <ClInclude Include="CCSOSThread.h">
-      <Filter>Plantform</Filter>
-    </ClInclude>
     <ClInclude Include="CCSTimeStamp.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CCSSocket.h">
-      <Filter>Plantform</Filter>
     </ClInclude>
     <ClInclude Include="CCSInetAddress.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CCSOSMemory.h">
-      <Filter>Plantform</Filter>
+      <Filter>Plantform\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CCSOSProcess.h">
-      <Filter>Plantform</Filter>
+      <Filter>Plantform\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CCSOSSemaphore.h">
-      <Filter>Plantform</Filter>
+      <Filter>Plantform\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSOSThread.h">
+      <Filter>Plantform\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSSocket.h">
+      <Filter>Plantform\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSLock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSTimeValue.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -76,14 +88,20 @@
     <ClCompile Include="CCSTimeStamp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CCSSocket.cpp">
-      <Filter>Plantform</Filter>
-    </ClCompile>
     <ClCompile Include="CCSInetAddress.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CCSOSSemaphore.cpp">
-      <Filter>Plantform</Filter>
+      <Filter>Plantform\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSSocket.cpp">
+      <Filter>Plantform\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSLock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSTimeValue.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
