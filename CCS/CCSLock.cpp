@@ -104,6 +104,7 @@ int CCS_OS::LockMutex( CCSMutex* pMutex )
 		}
 		break;
 	default:
+		return -1;
 		break;
 	}
 #elif defined( CCS_LINUX)		// linux  实现
@@ -432,6 +433,28 @@ int CCS_OS::ThreadMutexLock(
 	return ::pthread_mutex_timedlock(
 		pThreadMutex,
 		&tsBuf );
+#endif
+
+	return 0;
+}
+
+int CCS_OS::ThreadMutexTryLock( CCSThreadMutex* pThreadMutex )
+{
+#ifdef CCS_WIN32
+
+#elif defined( CCS_LINUX)		// linux  实现
+	
+#endif
+
+	return 0;
+}
+
+int CCS_OS::ThreadMutexUnLock( CCSThreadMutex* pThreadMutex )
+{
+#ifdef CCS_WIN32
+
+#elif defined( CCS_LINUX)		// linux  实现
+	
 #endif
 
 	return 0;
