@@ -440,10 +440,24 @@ int CCS_OS::ThreadMutexLock(
 
 int CCS_OS::ThreadMutexTryLock( CCSThreadMutex* pThreadMutex )
 {
-#ifdef CCS_WIN32
+	if ( NULL == pThreadMutex )
+	{
+		return -1;
+	}
 
+#ifdef CCS_WIN32
+	BOOL ret = ::TryEnterCriticalSection( pThreadMutex );
+
+	return ret ? 0 : -1;
 #elif defined( CCS_LINUX)		// linux  实现
-	
+	int iRet = ::pthread_mutex_lock( pThreadMutex );
+
+	if ( 0 != iRet )
+	{
+		return -1;
+	}
+
+	return 0;
 #endif
 
 	return 0;
@@ -451,10 +465,23 @@ int CCS_OS::ThreadMutexTryLock( CCSThreadMutex* pThreadMutex )
 
 int CCS_OS::ThreadMutexUnLock( CCSThreadMutex* pThreadMutex )
 {
-#ifdef CCS_WIN32
+	if ( NULL == pThreadMutex )
+	{
+		return -1;
+	}
 
+#ifdef CCS_WIN32
+	::EnterCriticalSection( pThreadMutex );
+
+	return 0;
 #elif defined( CCS_LINUX)		// linux  实现
-	
+	int iRet = ::pthread_mutex_lock( pThreadMutex );
+	if ( 0 != iRet )
+	{
+		return -1;
+	}
+
+	return 0;
 #endif
 
 	return 0;

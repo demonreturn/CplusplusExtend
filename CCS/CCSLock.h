@@ -4,6 +4,7 @@
 
 #include "CCSBase.h"
 #include "CCSTimeStamp.h"
+#include "CCSTimeValue.h"
 
 typedef enum tag_MutexAddr
 {
