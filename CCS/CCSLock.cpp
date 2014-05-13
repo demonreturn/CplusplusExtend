@@ -486,3 +486,138 @@ int CCS_OS::ThreadMutexUnLock( CCSThreadMutex* pThreadMutex )
 
 	return 0;
 }
+
+int CCS_OS::EventDestroy( CCS_HANDLE* event )
+{
+#ifdef CCS_WIN32
+	::CloseHandle( *event );
+
+	return 0;
+#elif defined( CCS_LINUX)		// linux  实现
+	
+	return -1;
+#endif
+}
+
+int CCS_OS::EventInit( 
+	CCS_HANDLE* event,
+	int manualReset /*= 0*/,
+	int initialState /*= 0*/,
+	const char* pszName /*= 0*/,
+	void* pArg /*= 0*/,
+	LPSECURITY_ATTRIBUTES sa /*= 0 */ )
+{
+#ifdef CCS_WIN32
+	*event = ::CreateEventA( sa, manualReset, initialState, pszName );	//  宽字符
+
+	return 0;
+#elif defined( CCS_LINUX)		// linux  实现
+	
+	return -1;
+#endif
+}
+
+int CCS_OS::EventPulse( CCS_HANDLE* event )
+{
+#ifdef CCS_WIN32
+	::PulseEvent( *event );
+
+	return 0;
+#elif defined( CCS_LINUX)		// linux  实现
+	
+	return -1;
+#endif
+}
+
+int CCS_OS::EventReset( CCS_HANDLE* event )
+{
+#ifdef CCS_WIN32
+
+	::ResetEvent( *event );
+
+	return 0;
+#elif defined( CCS_LINUX)		// linux  实现
+	return -1;
+#endif
+}
+
+int CCS_OS::EventSignal( CCS_HANDLE* event )
+{
+#ifdef CCS_WIN32
+
+	::SetEvent( *event );
+
+	return 0;
+#elif defined( CCS_LINUX)		// linux  实现
+	return -1;
+#endif
+}
+
+int CCS_OS::EventTimeWait( CCS_HANDLE* event )
+{
+#ifdef CCS_WIN32
+	DWORD ret = ::WaitForSingleObject( *event, INFINITE );
+
+	switch ( ret )
+	{
+	case WAIT_OBJECT_0:
+		{
+			return 0;
+		}
+
+	default:
+		{
+			return -1;
+		}
+		break;
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	return -1;
+#endif
+}
+
+int CCS_OS::EventTimeWait( 
+	CCS_HANDLE* event,
+	const CCCSTimeValue& timeout )
+{
+#ifdef CCS_WIN32
+	DWORD ret = -1;
+	if ( 0 == timeout )
+	{
+		ret = ::WaitForSingleObject( *event, INFINITE );
+	}
+	else
+	{
+		ret = ::WaitForSingleObject( *event, timeout.GetMSecond() );
+	}
+
+	switch ( ret )
+	{
+	case WAIT_OBJECT_0:
+		{
+			return 0;
+		}
+	case WAIT_TIMEOUT:
+		{
+			return -1;
+		}
+	default:
+		{
+			return -1;
+		}
+		break;
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	return -1;
+#endif
+}
+
+/*****************************************************************************/
+// A set of wrappers for critical section end
+/*****************************************************************************/
+
+
+
+/*****************************************************************************/
+// A set of wrappers for event start
+/*****************************************************************************/
