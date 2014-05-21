@@ -105,7 +105,7 @@ namespace CCS_OS
 	int EventTimeWait( CCS_HANDLE* event );
 
 	int EventTimeWait( CCS_HANDLE* event,
-		const CCCSTimeStamp& timeout );
+		const CCCSTimeValue& timeout );
 	
 /*****************************************************************************/
 // A set of wrappers for event end

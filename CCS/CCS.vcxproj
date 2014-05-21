@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="CCSBase.h" />
     <ClInclude Include="CCSErrorDefines.h" />
+    <ClInclude Include="CCSFile.h" />
     <ClInclude Include="CCSInetAddress.h" />
     <ClInclude Include="CCSLock.h" />
     <ClInclude Include="CCSOSMemory.h" />
@@ -99,6 +100,7 @@
     <ResourceCompile Include="CCS.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CCSFile.cpp" />
     <ClCompile Include="CCSInetAddress.cpp" />
     <ClCompile Include="CCSLock.cpp" />
     <ClCompile Include="CCSOSSemaphore.cpp" />

@@ -48,9 +48,6 @@
     <ClInclude Include="CCSUtilDefines.h">
       <Filter>Common Defines</Filter>
     </ClInclude>
-    <ClInclude Include="CCSTimeStamp.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="CCSInetAddress.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -70,9 +67,15 @@
       <Filter>Plantform\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CCSLock.h">
-      <Filter>头文件</Filter>
+      <Filter>Plantform\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSTimeStamp.h">
+      <Filter>Time</Filter>
     </ClInclude>
     <ClInclude Include="CCSTimeValue.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -85,9 +88,6 @@
     <ClCompile Include="CCSTrace.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CCSTimeStamp.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="CCSInetAddress.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -98,9 +98,15 @@
       <Filter>Plantform\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CCSLock.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Plantform\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSTimeStamp.cpp">
+      <Filter>Time</Filter>
     </ClCompile>
     <ClCompile Include="CCSTimeValue.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSFile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
