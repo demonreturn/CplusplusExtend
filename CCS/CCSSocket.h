@@ -60,12 +60,125 @@ namespace CCS_OS
 	/*
 	 * 设置socket的属性
 	 */
-	extern int SetSocketOption(
+	extern CCS_API int SetSocketOption(
 		CSSOCKET handle,
 		int iLevel,
 		int iOption,
 		const void* pOption,
 		int iOptionLen );
+
+	/*
+	 * 获取socket的属性
+	 */
+	extern CCS_API int GetSocketOption(
+		CSSOCKET handle,
+		int iLevel,
+		int iOption,
+		void* pOptionValue,
+		int* pOptionLen );
+
+	/*
+	 * 关闭一个socket
+	 */
+	extern CCS_API int CloseSocket(CSSOCKET handle);
+
+	/*
+	 * 发送数据
+	 */
+	extern CCS_API int Send(
+		HANDLE handle,
+		const char* pData,
+		DWORD dwLength,
+		int iFlag = 0 );
+
+	/*
+	 * 发送数据
+	 */
+	extern CCS_API int SendV(
+		HANDLE handle,
+		const iovec pszIov[],
+		DWORD dwCount );
+
+	/* 
+	 * 收取数据
+	 */
+	extern CCS_API int Recv(
+		HANDLE handle,
+		char* pBuffer,
+		DWORD dwLength,
+		int iFlag = 0 );
+
+	/*
+	 * 收取数据
+	 */
+	extern CCS_API int RecvV(
+		HANDLE handle,
+		iovec szIov[],
+		DWORD dwCount );
+
+	/*
+	 * 发送数据, 仅用于UDP
+	 */
+	extern CCS_API int SendUdp(
+		HANDLE handle,
+		const char* pData,
+		DWORD dwLength,
+		const CCCSInetAddress& peerAddress,
+		int iFlag = 0 );
+
+	/*
+	 * 发送数据, 仅用于UDP
+	 */
+	extern CCS_API int SendUdpV(
+		HANDLE handle,
+		const iovec pszIov[],
+		DWORD dwCount,
+		const CCCSInetAddress& peerAddress );
+
+	/*
+	 * 收取数据, 仅用于UDP
+	 */
+	extern CCS_API int RedvUDP(
+		HANDLE handle,
+		char* pBuffer,
+		DWORD dwLength,
+		CCCSInetAddress& peerAddress,
+		int iFlag = 0 );
+
+	/*
+	 * 为一个socket句柄绑定一个本地地址
+	 */
+	extern CCS_API int Bind(
+		HANDLE handle,
+		const CCCSInetAddress& localAddreess );
+
+	/*
+	 * 屏蔽某个socket的某些功能
+	 */
+	extern CCS_API int ShutDown(
+		HANDLE handle,
+		int iFlag );
+
+	/*
+	 * 连接
+	 */
+	extern CCS_API int Connect(
+		HANDLE handle,
+		const CCCSInetAddress& peerAddress );
+
+	/*
+	 * 监听
+	 */
+	extern CCS_API int Listen(
+		HANDLE handle,
+		const CCCSInetAddress& peerAddress );
+
+	/*
+	 * 监听
+	 */
+	extern CCS_API HANDLE Accept(
+		HANDLE handle,
+		CCCSInetAddress& peerAddress );
 }
 
 #endif // _CCS_SOCKET_H_

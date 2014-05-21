@@ -15,6 +15,14 @@ typedef SOCKET CSSOCKET;
 typedef HANDLE SEM_HANDLE;
 typedef CRITICAL_SECTION THREAD_HANDLE;
 
+struct iovec
+{
+	DWORD iov_len;	
+	char* iov_base;
+};
+
+#define CCS_IOV_MAX 64
+
 #elif defined( CCS_LINUX)
 typedef void* THREAD_FUNC_RETURN;
 typedef void* THREAD_RETURN_TYPE;
@@ -36,7 +44,13 @@ typedef THREAD_RETURN_TYPE (_stdcall * THREAD_FUNC)(void*);
 typedef std::string CCSString;
 
 typedef long CCSResult;
+
+#ifdef SUPPORT_IPV6
+typedef sockaddr_in6 CCSSOCKADDR
+#else
 typedef sockaddr_in CCSSOCKADDR;
+#endif
+
 
 
 #endif // _CCS_BASE_H_
