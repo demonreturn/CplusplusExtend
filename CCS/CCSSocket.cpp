@@ -241,3 +241,345 @@ extern CCS_API int CCS_OS::Send(
 
 	return iRet;
 }
+
+extern CCS_API int CCS_OS::SendV( 
+	HANDLE handle,
+	const iovec pszIov[],
+	DWORD dwCount )
+{
+	int iRet = 0;
+#ifdef CCS_WIN32
+	DWORD dwBytesSend = 0;
+	iRet = ::WSASend(
+		(CSSOCKET)handle,
+		(WSABUF*)pszIov,
+		dwCount,
+		&dwBytesSend,
+		0,
+		NULL,
+		NULL );
+
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno = ::WSAGetLastError();
+	}
+	else
+	{
+		iRet = (int)dwBytesSend;
+	}
+
+#elif defined( CCS_LINUX)		// linux  实现
+	iRet = ::writev(
+		handle,
+		pszIov,
+		dwCount );
+#endif
+}
+
+extern CCS_API int CCS_OS::Recv( 
+	HANDLE handle,
+	char* pBuffer,
+	DWORD dwLength,
+	int iFlag /*= 0 */ )
+{
+	if ( NULL == pBuffer )
+	{
+		return SOCKET_ERROR;
+	}
+
+	int iRet = ::recv(
+		(CSSOCKET)handle,
+		pBuffer,
+		dwLength,
+		iFlag );
+#ifdef CCS_WIN32
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno = ::WSAGetLastError();
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	if ( SOCKET_ERROR == iRet &&
+		errno == EAGAIN )
+	{
+		errno = EWOULDBLOCK;
+	}
+#endif
+
+	return iRet;
+}
+
+extern CCS_API int CCS_OS::RecvV( 
+	HANDLE handle,
+	iovec szIov[],
+	DWORD dwCount )
+{
+	if ( NULL == szIov )
+	{
+		return SOCKET_ERROR;
+	}
+
+	int iRet = 0;
+#ifdef CCS_WIN32
+	DWORD dwBytesRecv = 0;
+	DWORD dwFlag = 0;
+
+	iRet = ::WSARecv(
+		(CSSOCKET)handle,
+		(WSABUF*) szIov,
+		dwCount,
+		&dwBytesRecv,
+		&dwFlag,
+		NULL,
+		NULL );
+
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno = ::WSAGetLastError();
+	}
+	else
+	{
+		iRet = (int)dwBytesRecv;
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	iRet = ::readv(
+		handle,
+		szIov,
+		dwCount );
+#endif
+
+	return iRet;
+}
+
+extern CCS_API int CCS_OS::Bind( 
+	HANDLE handle,
+	const CCCSInetAddress& localAddreess )
+{
+#ifdef CCS_WIN32
+	int iRet = ::bind(
+		(CSSOCKET)handle,
+		reinterpret_cast<const sockaddr*>(localAddreess.GetRawAddress()),
+		localAddreess.GetSize() );
+#elif defined( CCS_LINUX)		// linux  实现
+	int iRet = ::bind(
+		(CSSOCKET)handle,
+		reinterpret_cast<const sockaddr*>(localAddreess.GetRawAddress()),
+		static_cast<socklen_t>(localAddreess.GetSize() ));
+#endif
+
+	return iRet;
+}
+
+extern CCS_API int CCS_OS::ShutDown( HANDLE handle, int iFlag )
+{
+	int iRet = ::shutdown(
+		(CSSOCKET)handle,
+		iFlag );
+
+#ifdef CCS_WIN32
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno = ::WSAGetLastError();
+	}
+#endif
+
+	return iRet;
+}
+
+extern CCS_API int CCS_OS::SendUdp( 
+	HANDLE handle,
+	const char* pData,
+	DWORD dwLength,
+	const CCCSInetAddress& peerAddress,
+	int iFlag /*= 0 */ )
+{
+#ifdef CCS_WIN32
+	int iRet = ::sendto(
+		(CSSOCKET)handle,
+		pData,
+		dwLength,
+		iFlag,
+		reinterpret_cast<const sockaddr*>( peerAddress.GetRawAddress()),
+		peerAddress.GetSize() );
+
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno == ::WSAGetLastError();
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	int iRet = ::sendto(
+		(CSSOCKET)handle,
+		pData,
+		dwLength,
+		iFlag,
+		reinterpret_cast<const sockaddr*>( peerAddress.GetRawAddress()),
+		static_cast<socklen_t>(peerAddress.GetSize()) );
+#endif
+
+	return iRet;
+}
+
+extern CCS_API int CCS_OS::SendUdpV( 
+	HANDLE handle,
+	const iovec pszIov[],
+	DWORD dwCount,
+	const CCCSInetAddress& peerAddress )
+{
+	int iRet = 0;
+#ifdef CCS_WIN32
+	DWORD dwBytesSend = 0;
+	iRet = ::WSASendTo(
+		(CSSOCKET)handle,
+		(WSABUF*)pszIov,
+		dwCount,
+		&dwBytesSend,
+		0,
+		reinterpret_cast<const sockaddr*>(peerAddress.GetRawAddress()),
+		peerAddress.GetSize(),
+		NULL,
+		NULL );
+
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno = ::WSAGetLastError();
+	}
+	else
+	{
+		iRet = (int)dwBytesSend;
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	msghdr msgData;
+	msgData.msg_iov = (iovec*)pszIov;
+	msgData.msg_iovlen = dwCount;	
+	msgData.msg_name = (struct sockaddr*)peerAddress.GetRawAddress();
+	msgData.msg_namelen = peerAddress.GetSize();
+	msgData.msg_control = 0;
+	msgData.msg_controllen = 0;
+	msgData.msg_flags = 0;
+
+	iResult = ::sendmsg(
+		Handle, 
+		&msgData, 
+		0 );
+#endif
+
+	return iRet;
+}
+
+extern CCS_API int CCS_OS::RedvUDP( 
+	HANDLE handle,
+	char* pBuffer, 
+	DWORD dwLength,
+	CCCSInetAddress& peerAddress,
+	int iFlag /*= 0 */ )
+{
+	int iSize = (int)peerAddress.GetSize();
+
+#ifdef CCS_WIN32
+	int iRet = ::recvfrom(
+		(CSSOCKET)handle,
+		pBuffer,
+		dwLength,
+		iFlag,
+		reinterpret_cast<sockaddr*>( const_cast<CCSSOCKADDR*>(peerAddress.GetRawAddress())),
+		&iSize );
+
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno = ::WSAGetLastError();
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	int iRet = ::recvfrom(
+		(CSSOCKET)handle,
+		pBuffer,
+		dwLength,
+		iFlag,
+		reinterpret_cast<sockaddr*>( const_cast<CCSSOCKADDR*>(peerAddress.GetRawAddress())),
+		reinterpret_cast<socklen_t*>( &iSize ) );
+#endif
+
+	return iRet;
+}
+
+extern CCS_API int CCS_OS::Connect( 
+	HANDLE handle,
+	const CCCSInetAddress& peerAddress )
+{
+	int iRet = ::connect(
+		(CSSOCKET)handle,
+		reinterpret_cast<const struct sockaddr*>( peerAddress.GetRawAddress()),
+		(int)peerAddress.GetSize() );
+#ifdef CCS_WIN32
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno = ::WSAGetLastError();
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	if ( SOCKET_ERROR == iRet )
+	{
+		if ( EINPROGRESS == errno )
+		{
+			errno = EWOULDBLOCK;
+		}
+	}
+#endif
+	
+	return iRet;
+}
+
+extern CCS_API int CCS_OS::Listen( 
+	HANDLE handle,
+	const CCCSInetAddress& peerAddress )
+{
+	int iRet = ::listen(
+		(CSSOCKET)handle,
+		SOMAXCONN );
+
+#ifdef CCS_WIN32
+	if ( SOCKET_ERROR == iRet )
+	{
+		errno == ::WSAGetLastError();
+	}
+#elif defined( CCS_LINUX)		// linux  实现
+	if ( SOCKET_ERROR == iRet )
+	{
+		if ( EINPROGRESS == errno )
+		{
+			errno = EWOULDBLOCK;
+		}
+	}
+#endif
+	
+	return iRet;
+}
+
+extern CCS_API HANDLE CCS_OS::Accept( 
+	HANDLE handle,
+	CCCSInetAddress& peerAddress )
+{
+	int iSize = peerAddress.GetSize();
+#ifdef CCS_WIN32
+	handle = (HANDLE)::accept(
+		(CSSOCKET)handle,
+		reinterpret_cast<sockaddr*>(const_cast<CCSSOCKADDR*>(peerAddress.GetRawAddress())),
+		&iSize );
+
+	if ( CCS_INVALID_HANDLE == handle )
+	{
+		errno == ::WSAGetLastError();
+	}
+
+#elif defined( CCS_LINUX)		// linux  实现
+	handle = (HANDLE)::accept(
+		(CSSOCKET)handle,
+		reinterpret_cast<sockaddr*>(const_cast<CCSSOCKADDR*>(peerAddress.GetRawAddress())),
+		reinterpret_cast<socklen_t*>( &iSize ) );
+
+	if ( CCS_INVALID_HANDLE == handle &&
+		EINPROGRESS == errno )
+	{
+		errno == EWOULDBLOCK;
+	}
+#endif
+
+	return handle;
+}

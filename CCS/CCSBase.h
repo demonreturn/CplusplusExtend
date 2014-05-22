@@ -14,6 +14,7 @@ typedef HANDLE CCS_HANDLE;
 typedef SOCKET CSSOCKET;
 typedef HANDLE SEM_HANDLE;
 typedef CRITICAL_SECTION THREAD_HANDLE;
+#define CCS_INVALID_HANDLE		INVALID_HANDLE_VALUE
 
 struct iovec
 {
@@ -30,6 +31,7 @@ typedef int CCS_HANDLE;
 typedef int CSSOCKET;
 typedef sem_t SEM_HANDLE;
 typedef pthread_mutex_t THREAD_HANDLE;
+#define CCS_INVALID_HANDLE		-1
 
 typedef struct tagSECURITY_ATTRIBUTES
 {
