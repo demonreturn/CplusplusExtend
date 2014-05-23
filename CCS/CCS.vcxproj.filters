@@ -76,7 +76,7 @@
       <Filter>Time</Filter>
     </ClInclude>
     <ClInclude Include="CCSFile.h">
-      <Filter>头文件</Filter>
+      <Filter>Plantform\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -107,7 +107,7 @@
       <Filter>Time</Filter>
     </ClCompile>
     <ClCompile Include="CCSFile.cpp">
-      <Filter>源文件</Filter>
+      <Filter>Plantform\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

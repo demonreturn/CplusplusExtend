@@ -22,6 +22,14 @@ struct iovec
 	char* iov_base;
 };
 
+// fileoperation define
+#define CCS_DEFAULT_FILE_MODE ( FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE)
+
+// 文件seek操作定义
+#define CCS_SEEK_BEGIN		FILE_BEGIN
+#define CCS_SEEK_CUR		FILE_CURRENT
+#define CCS_SEEK_END		FILE_END
+
 #define CCS_IOV_MAX 64
 
 #elif defined( CCS_LINUX)
@@ -40,12 +48,22 @@ typedef struct tagSECURITY_ATTRIBUTES
 	BOOL bInheritHandle;
 }SECURITY_ATTRIBUTES, *PSECURITY_ATTRIBUTES, *LPSECURITY_ATTRIBUTES;
 
+// fileoperation define
+#define CCS_DEFAULT_FILE_MODE 0644
+
+// 文件seek操作定义
+#define CCS_SEEK_BEGIN		SEEK_SET
+#define CCS_SEEK_CUR		SEEK_CUR
+#define CCS_SEEK_END		SEEK_END
+
 #endif
 
 typedef THREAD_RETURN_TYPE (_stdcall * THREAD_FUNC)(void*);
 typedef std::string CCSString;
+typedef LONGLONG CCS_OFFSET;
 
 typedef long CCSResult;
+typedef long long LONGLONG;
 
 #ifdef SUPPORT_IPV6
 typedef sockaddr_in6 CCSSOCKADDR
@@ -53,7 +71,14 @@ typedef sockaddr_in6 CCSSOCKADDR
 typedef sockaddr_in CCSSOCKADDR;
 #endif
 
+typedef struct tag_FileAttribute
+{
+	LONGLONG				llFlesize;
+	LONGLONG				llCreateTime;
+	LONGLONG				llModifyTime;
+} FileAttribute;
 
+#define  MAX_FILENAMELEN			260
 
 #endif // _CCS_BASE_H_
 
