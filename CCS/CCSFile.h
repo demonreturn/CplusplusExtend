@@ -116,7 +116,7 @@ namespace CCS_OS
 	 * 截断文件, 适用于将文件缩小
 	 */
 	extern CCS_API int TruncateFile( 
-		HANDLE scHandle,
+		HANDLE handle,
 		LONGLONG llSize );
 
 	/*

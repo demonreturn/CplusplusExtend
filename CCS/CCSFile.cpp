@@ -232,3 +232,393 @@ extern CCS_API int CCS_OS::CloseFile( HANDLE handle )
 
 	return -1;
 }
+
+extern CCS_API CCS_OFFSET CCS_OS::GetFilePosition( 
+	HANDLE handle )
+{
+#ifdef CCS_WIN32
+	LARGE_INTEGER lgIn;
+	LARGE_INTEGER lgOut;
+	lgIn.QuadPart = 0;
+
+	BOOL bRet = ::SetFilePointerEx( 
+		handle,
+		lgIn, 
+		&lgOut, 
+		FILE_CURRENT );
+
+	if ( bRet)
+	{
+		return lgOut.QuadPart;
+	}
+
+	return -1;
+#elif defined( CCS_LINUX)		// linux  实现
+	return ::lseek( handle, 0, SEEK_CUR );
+#endif
+
+	return -1;
+}
+
+extern CCS_API int CCS_OS::GetFileAddribute( 
+	const char* pFullPath,
+	FileAttribute& fileAttri )
+{
+	if ( NULL == pFullPath )
+	{
+		return -1;
+	}
+
+#ifdef CCS_WIN32
+	struct __stat64 fileStat;
+	int iRet = ::_stat64( pFullPath,
+		&fileStat );
+
+	if ( 0 != iRet )
+	{
+		return -1;
+	}
+
+	fileAttri.llCreateTime = fileStat.st_ctime;
+	fileAttri.llFlesize = fileStat.st_size;
+	fileAttri.llModifyTime = fileStat.st_mtime;
+#elif defined( CCS_LINUX)		// linux  实现
+	struct stat fileStat;
+
+	int iRet = ::stat( pFullPath, 
+		&fileStat );
+	if ( 0 == iRet )
+	{
+		fileAttri.llCreateTime = fileStat.st_ctime;
+		fileAttri.llFlesize = fileStat.st_size;
+		fileAttri.llModifyTime = fileStat.st_mtime;
+	}
+
+	return -1;
+#endif
+	
+	return -1;
+}
+
+extern CCS_API int CCS_OS::ReadLockFile( 
+	HANDLE handle,
+	CCS_OFFSET offset,
+	LONGLONG llLockSize,
+	DWORD dwFlags /*= LOCKFILE_FAIL_IMMEDIATELY */ )
+{
+#ifdef CCS_WIN32
+	LARGE_INTEGER lg;
+	lg.QuadPart = llLockSize;
+
+	OVERLAPPED overLapp;
+	lg.QuadPart = offset;
+	overLapp.hEvent=NULL;
+	overLapp.Internal = NULL;
+	overLapp.InternalHigh = NULL;
+	overLapp.Offset = lg.LowPart;
+	overLapp.OffsetHigh = lg.HighPart;
+
+	BOOL bRet = ::LockFileEx( handle,
+		dwFlags,
+		0,
+		lg.LowPart,
+		lg.HighPart,
+		&overLapp );
+
+	return bRet ? 0 : -1;
+
+#elif defined( CCS_LINUX)		// linux  实现
+	struct flock fileLock;
+	fileLock.l_type = F_RDLCK;
+	fileLock.l_whence = SEEK_SET;
+	fileLock.l_start = offset;
+	fileLock.l_len = llLockSize;
+
+	int iRet = ::fcntl( 
+		handle, 
+		F_SETLK, 
+		&fileLock );
+
+	return iRet != 0 ? -1 : 0;
+#endif
+}
+
+extern CCS_API int CCS_OS::WriteLockFile( 
+	HANDLE handle,
+	CCS_OFFSET offset,
+	LONGLONG llLockSize,
+	DWORD dwFlags /*= LOCKFILE_EXCLUSIVE_LOCK */ )
+{
+#ifdef CCS_WIN32
+	LARGE_INTEGER lg;
+	lg.QuadPart = llLockSize;
+
+	OVERLAPPED overLapp;
+	lg.QuadPart = offset;
+	overLapp.Offset = lg.LowPart;
+	overLapp.OffsetHigh = lg.HighPart;
+
+	DWORD dwWriteFlag = dwFlags | LOCKFILE_EXCLUSIVE_LOCK;
+
+	BOOL bRet = ::LockFileEx( handle,
+		dwWriteFlag,
+		0,
+		lg.LowPart,
+		lg.HighPart,
+		&overLapp );
+
+	return bRet ? 0 : -1;
+#elif defined( CCS_LINUX)		// linux  实现
+	struct flock fileLock;
+	fileLock.l_type = F_WRLCK;
+	fileLock.l_whence = SEEK_SET;
+	fileLock.l_start = offset;
+	fileLock.l_len = llLockSize;
+
+	int iRet = ::fcntl( 
+		handle, 
+		F_SETLK, 
+		&fileLock );
+
+	return iRet != 0 ? -1 : 0;
+#endif
+}
+
+extern CCS_API int CCS_OS::UnLockFile(
+	HANDLE handle,
+	CCS_OFFSET offset,
+	LONGLONG llLockSize )
+{
+#ifdef CCS_WIN32
+	LARGE_INTEGER lg;
+	lg.QuadPart = llLockSize;
+
+	OVERLAPPED overLapp;
+	lg.QuadPart = offset;
+	overLapp.Offset = lg.LowPart;
+	overLapp.OffsetHigh = lg.HighPart;
+
+	BOOL bRet = ::UnlockFileEx( 
+		handle, 
+		0, 
+		lg.LowPart,
+		lg.HighPart, 
+		&overLapp );
+
+	return bRet ? 0 : -1;
+#elif defined( CCS_LINUX)		// linux  实现
+	struct flock fileLock;
+	fileLock.l_type = F_UNLCK;
+	fileLock.l_whence = SEEK_SET;
+	fileLock.l_start = offset;
+	fileLock.l_len = llLockSize;
+
+	int iRet = ::fcntl( 
+		handle, 
+		F_SETLK, 
+		&fileLock );
+
+	return (iRet == 0) ? 0 : -1;
+#endif
+}
+
+extern CCS_API bool CCS_OS::IsFileExist( 
+	const char* pFullPath )
+{
+	if ( NULL == pFullPath )
+	{
+		return false;
+	}
+
+#ifdef CCS_WIN32
+	int iRet = ::_access( pFullPath, 0 );
+
+	return (iRet == -1) ? false : true;
+#elif defined( CCS_LINUX)		// linux  实现
+	int iRet = ::access( pFullPath, F_OK );
+
+	return (iRet == -1) ? false : true;
+#endif
+}
+
+extern CCS_API bool CCS_OS::DeleteFile( 
+	const char* pFullPath )
+{
+	if ( NULL == pFullPath )
+	{
+		return false;
+	}
+
+#ifdef CCS_WIN32
+	return ::DeleteFileA( pFullPath );
+#elif defined( CCS_LINUX)		// linux  实现
+	int iRet = ::remove( pFullPath );
+
+	return (0 == iRet) ? true : false;
+#endif
+}
+
+extern CCS_API LONGLONG CCS_OS::GetDiskFreeSpace( 
+	const char* pPath )
+{
+#ifdef CCS_WIN32
+	ULARGE_INTEGER lgFreeBytesAvailable;
+	ULARGE_INTEGER lgTotalBytes;
+	ULARGE_INTEGER lgFreeTotalBytes;
+
+	BOOL bRet = ::GetDiskFreeSpaceExA( pPath, 
+		&lgFreeBytesAvailable, 
+		&lgTotalBytes, 
+		&lgFreeTotalBytes );
+	return lgFreeBytesAvailable.QuadPart;
+
+#elif defined( CCS_LINUX)		// linux  实现
+	struct statfs fsInfo;
+	int iRet = ::statfs( pPath, 
+		&fsInfo );
+	//f_bsize : block大小
+	//f_bfree : blcok数
+	LONGLONG llFreeBytes = fsInfo.f_bsize * fsInfo.f_bfree ;
+
+	return llFreeBytes;
+#endif
+}
+
+extern CCS_API int CCS_OS::TruncateFile( 
+	HANDLE handle,
+	LONGLONG llSize )
+{
+#ifdef CCS_WIN32
+	int iRet = ::CCS_OS::SeekFile(
+		handle, llSize, CCS_SEEK_BEGIN );
+
+	if ( iRet != 0 )
+	{
+		return -1;
+	}
+
+	BOOL bRet = ::SetEndOfFile( handle );
+
+	return bRet ? 0 : -1;
+#elif defined( CCS_LINUX)		// linux  实现
+	return ::ftruncate( 
+		handle, 
+		llSize );
+#endif
+}
+
+extern CCS_API int CCS_OS::CopyFile( 
+	const char* pSrcFile,
+	const char* pDstFile,
+	bool bFailIfExist /*= true */ )
+{
+	if ( NULL == pSrcFile || NULL == pDstFile )
+	{
+		return -1;
+	}
+#ifdef CCS_WIN32
+	bool bRet = ::CopyFileA(
+		pSrcFile,
+		pDstFile,
+		bFailIfExist );
+
+	return bRet ? 0 : -1;
+#elif defined( CCS_LINUX)		// linux  实现
+	
+	if ( bFailIfExist && IsFileExist( pDstFile ))
+	{
+		return -;
+	}
+
+	FileAttribute fileAttri;
+	LONGLONG llFileSize = -1;
+
+	if ( 0 == CCS_OS::GetFileAddribute( pSrcFile, fileAttri) )
+	{
+		llFileSize = fileAttri.llFlesize;
+	}
+	else
+	{
+		return -1;
+	}
+
+	HANDLE hSrcHandle = CCS_OS::OpenFile( pSrcFile );
+	HANDLE hDstHandle = CCS_OS::OpenFile( pDstFile,
+		O_CREAT | O_WRONLY | O_TRUNC );
+
+	if ( CCS_INVALID_HANDLE == hSrcHandle 
+		|| CCS_INVALID_HANDLE == hDstHandle )
+	{
+		CCS_OS::CloseFile( pSrcFile );
+		CCS_OS::CloseFile( pDstFile );
+		return -1;
+	}
+
+	if ( -1 ==  CCS_OS::ReadLockFile( hSrcHandle,
+		0, llFileSize) )
+	{
+		CCS_OS::CloseFile( pSrcFile );
+		CCS_OS::CloseFile( pDstFile );
+		return -1;
+	}
+
+	//目标文件加写锁
+	if ( -1 == CCS_OS::WriteLockFile( hDstHandle,
+		0, llFileSize) )
+	{
+		CCS_OS::UnLockFile( hSrcHandle,
+			0, llFileSize );
+
+		CCS_OS::CloseFile( pSrcFile );
+		CCS_OS::CloseFile( pDstFile );
+		return -1;
+	}
+
+	char tempBuffer[1024];
+	DWORD dwHaveRead = 0;
+	DWORD dwhaveWrite = 0;
+	int iRet = 0;
+	bool bFailed = false;
+
+	while ( true )
+	{
+		dwHaveRead = 0;
+		iRet = CCS_OS::ReadFile( hSrcHandle,
+			tempBuffer,
+			sizeof( tempBuffer),
+			&dwHaveRead );
+
+		if ( -1 == iRet 
+			|| 0 == dwHaveRead )
+		{
+			
+			bFailed = ((0 == dwHaveRead) ? false : true);
+
+			break;
+		}
+
+		dwhaveWrite = 0;
+		iRet = ::CCS_OS::WriteFile( hDstHandle, tempBuffer, dwHaveRead, &dwhaveWrite );
+		if ( -1 == iRet )
+		{
+			bFailed = true;
+			break;
+		}
+	}
+
+	CCS_OS::UnLockFile( hSrcHandle, 0, llFileSize );
+	CCS_OS::UnLockFile( hDstHandle, 0, llFileSize );
+
+	CCS_OS::CloseFile( hSrcHandle );
+	CCS_OS::CloseFile( hDstHandle );
+
+	if ( bFailed )
+	{
+		CCS_OS::DeleteFile( pDstFile );
+	}
+
+	return 0;
+#endif
+
+	return -1;
+}
