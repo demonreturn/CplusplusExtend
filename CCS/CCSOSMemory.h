@@ -19,7 +19,7 @@ namespace CCS_OS
 	inline int OSMemcpy(
 		void* pdst,
 		unsigned int dstlen,
-		void* psrc,
+		const void* psrc,
 		unsigned int srclen )
 	{
 		return ::memcpy_s(

@@ -44,7 +44,7 @@ public:
 private:
 	CCSResult SetIP( const char* pszIP );
 
-	CCSResult SetIP( DWORD dwIP, bool bnetworkOrder = FALSE );
+	CCSResult SetIP( DWORD dwIP, bool bnetworkOrder = false );
 
 private:
 	CCSSOCKADDR					m_sockAddr;

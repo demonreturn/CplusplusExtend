@@ -82,8 +82,12 @@
     <ClInclude Include="CCSBase.h" />
     <ClInclude Include="CCSErrorDefines.h" />
     <ClInclude Include="CCSFile.h" />
+    <ClInclude Include="CCSFileImpl.h" />
+    <ClInclude Include="CCSFileTypes.h" />
     <ClInclude Include="CCSInetAddress.h" />
+    <ClInclude Include="CCSIOBase.h" />
     <ClInclude Include="CCSLock.h" />
+    <ClInclude Include="CCSMutexGuardT.h" />
     <ClInclude Include="CCSOSMemory.h" />
     <ClInclude Include="CCSOSProcess.h" />
     <ClInclude Include="CCSOSSemaphore.h" />
@@ -92,8 +96,14 @@
     <ClInclude Include="CCSSocket.h" />
     <ClInclude Include="CCSTimeStamp.h" />
     <ClInclude Include="CCSTimeValue.h" />
-    <ClInclude Include="CCSTrace.h" />
     <ClInclude Include="CCSUtilDefines.h" />
+    <ClInclude Include="CSFile.h" />
+    <ClInclude Include="CSFileImplFactory.h" />
+    <ClInclude Include="CSLogger.h" />
+    <ClInclude Include="CCSOSShareMemory.h" />
+    <ClInclude Include="CSRegularFileImpl.h" />
+    <ClInclude Include="CSShareMemory.h" />
+    <ClInclude Include="CSShareVariantT.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -107,7 +117,12 @@
     <ClCompile Include="CCSSocket.cpp" />
     <ClCompile Include="CCSTimeStamp.cpp" />
     <ClCompile Include="CCSTimeValue.cpp" />
-    <ClCompile Include="CCSTrace.cpp" />
+    <ClCompile Include="CSFile.cpp" />
+    <ClCompile Include="CSFileImplFactory.cpp" />
+    <ClCompile Include="CSLogger.cpp" />
+    <ClCompile Include="CCSOSShareMemory.cpp" />
+    <ClCompile Include="CSRegularFileImpl.cpp" />
+    <ClCompile Include="CSShareMemory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

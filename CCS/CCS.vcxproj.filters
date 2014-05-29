@@ -33,9 +33,6 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CCSTrace.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="CCSBase.h">
       <Filter>Common Defines</Filter>
     </ClInclude>
@@ -78,6 +75,39 @@
     <ClInclude Include="CCSFile.h">
       <Filter>Plantform\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CSLogger.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSShareVariantT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSMutexGuardT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSOSShareMemory.h">
+      <Filter>Plantform\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSShareMemory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSFileTypes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSIOBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSFileImpl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSFile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSFileImplFactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSRegularFileImpl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CCS.rc">
@@ -85,9 +115,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CCSTrace.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="CCSInetAddress.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -108,6 +135,24 @@
     </ClCompile>
     <ClCompile Include="CCSFile.cpp">
       <Filter>Plantform\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSLogger.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CCSOSShareMemory.cpp">
+      <Filter>Plantform\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSShareMemory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSFile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSFileImplFactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSRegularFileImpl.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

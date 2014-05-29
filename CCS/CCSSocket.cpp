@@ -274,6 +274,8 @@ extern CCS_API int CCS_OS::SendV(
 		pszIov,
 		dwCount );
 #endif
+
+	return iRet;
 }
 
 extern CCS_API int CCS_OS::Recv( 
