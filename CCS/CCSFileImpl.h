@@ -44,6 +44,15 @@ public:
 	virtual LONGLONG GetCreateTime() = 0;
 
 	virtual LONGLONG GetModifyTime() = 0;
+
+	virtual int SetFileName( const char* pFileName )
+	{
+		return CCS_OK;
+	}
+
+	virtual void SetFlags( DWORD dwFlags ){}
+
+	virtual void SetAccessMode( DWORD dwMode ){}
 };
 
 #endif	//_CCS_FILEIMPL_H_

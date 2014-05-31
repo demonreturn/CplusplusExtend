@@ -53,14 +53,14 @@ public:
 
 	virtual LONGLONG GetModifyTime();
 
-	int SetFileName( const char* pFileName );
+	virtual int SetFileName( const char* pFileName );
 
-	void SetFlags( DWORD dwFlags )
+	virtual void SetFlags( DWORD dwFlags )
 	{
 		m_dwFlags = dwFlags;
 	}
 
-	void SetAccessMode( DWORD dwMode )
+	virtual void SetAccessMode( DWORD dwMode )
 	{
 		m_dwMode = dwMode;
 	}
