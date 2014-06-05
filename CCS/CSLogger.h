@@ -9,6 +9,8 @@
 class CCSChannel;
 class CCSLogMessage;
 
+#include <map>
+
 class CCSLogger
 {
 public:
