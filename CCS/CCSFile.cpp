@@ -450,7 +450,7 @@ extern CCS_API bool CCS_OS::DeleteFile(
 	}
 
 #ifdef CCS_WIN32
-	return ::DeleteFileA( pFullPath );
+	return ::DeleteFileA( pFullPath ) ? true : false;
 #elif defined( CCS_LINUX)		// linux  实现
 	int iRet = ::remove( pFullPath );
 
@@ -520,7 +520,7 @@ extern CCS_API int CCS_OS::CopyFile(
 	bool bRet = ::CopyFileA(
 		pSrcFile,
 		pDstFile,
-		bFailIfExist );
+		bFailIfExist ) ? true : false;
 
 	return bRet ? 0 : -1;
 #elif defined( CCS_LINUX)		// linux  实现

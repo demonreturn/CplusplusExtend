@@ -73,6 +73,8 @@ int CCSRegularFileImpl::Close()
 	}
 
 	int iRet = CCS_OS::CloseFile( m_fileHandle );
+
+	return iRet;
 }
 
 int CCSRegularFileImpl::Read( 

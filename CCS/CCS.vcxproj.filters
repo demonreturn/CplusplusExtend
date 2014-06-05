@@ -108,6 +108,24 @@
     <ClInclude Include="CSRegularFileImpl.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CSFormatter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSChannel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSDataBlock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSLogMessage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSMutex.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSOS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CCS.rc">
@@ -152,6 +170,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CSRegularFileImpl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSDataBlock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSLogMessage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSMutex.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

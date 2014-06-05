@@ -57,7 +57,10 @@ int CCS_OS::UnInitSemaphore( SEM_HANDLE* pSemaphore, const char* pszName /*= NUL
 
 	if ( NULL == pszName )
 	{
-
+		ret -1;
 	}
+
 #endif
+
+	return 0;
 }

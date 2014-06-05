@@ -3,8 +3,8 @@
 #define _CCS_LOGGER_H_
 
 #include "CCSBase.h"
-#include "CCSLock.h"
-#include "CCSMutexGuardT.h"
+
+#include "CSShareVariantT.h"
 
 class CCSChannel;
 class CCSLogMessage;
@@ -26,9 +26,9 @@ public:
 
 	static CCSLogger* Instance();
 
-	void Register( CCSChannel* pchannel );
-
 	void Init( const CCSString& strConfig );
+
+	void Register( CCSChannel* pchannel );
 
 	int GetLoggerLevel() const;
 
@@ -56,7 +56,7 @@ private:
 
 	void Reset();
 
-	static int GetLevelByName( const CCSString& levelName );
+	static int GetLevelName( const CCSString& levelName );
 
 	CCSLogger();
 
@@ -66,7 +66,8 @@ private:
 	
 	Name2ChannelMap				m_channels;
 
-	
+	typedef CCSShareVariantT<int>	LOG_LEVEL;
+	LOG_LEVEL					m_logLevel;
 };
 
 

@@ -88,6 +88,7 @@
     <ClInclude Include="CCSIOBase.h" />
     <ClInclude Include="CCSLock.h" />
     <ClInclude Include="CCSMutexGuardT.h" />
+    <ClInclude Include="CCSOS.h" />
     <ClInclude Include="CCSOSMemory.h" />
     <ClInclude Include="CCSOSProcess.h" />
     <ClInclude Include="CCSOSSemaphore.h" />
@@ -97,10 +98,15 @@
     <ClInclude Include="CCSTimeStamp.h" />
     <ClInclude Include="CCSTimeValue.h" />
     <ClInclude Include="CCSUtilDefines.h" />
+    <ClInclude Include="CSChannel.h" />
+    <ClInclude Include="CSDataBlock.h" />
     <ClInclude Include="CSFile.h" />
     <ClInclude Include="CSFileImplFactory.h" />
+    <ClInclude Include="CSFormatter.h" />
     <ClInclude Include="CSLogger.h" />
     <ClInclude Include="CCSOSShareMemory.h" />
+    <ClInclude Include="CSLogMessage.h" />
+    <ClInclude Include="CSMutex.h" />
     <ClInclude Include="CSRegularFileImpl.h" />
     <ClInclude Include="CSShareMemory.h" />
     <ClInclude Include="CSShareVariantT.h" />
@@ -117,10 +123,13 @@
     <ClCompile Include="CCSSocket.cpp" />
     <ClCompile Include="CCSTimeStamp.cpp" />
     <ClCompile Include="CCSTimeValue.cpp" />
+    <ClCompile Include="CSDataBlock.cpp" />
     <ClCompile Include="CSFile.cpp" />
     <ClCompile Include="CSFileImplFactory.cpp" />
     <ClCompile Include="CSLogger.cpp" />
     <ClCompile Include="CCSOSShareMemory.cpp" />
+    <ClCompile Include="CSLogMessage.cpp" />
+    <ClCompile Include="CSMutex.cpp" />
     <ClCompile Include="CSRegularFileImpl.cpp" />
     <ClCompile Include="CSShareMemory.cpp" />
   </ItemGroup>

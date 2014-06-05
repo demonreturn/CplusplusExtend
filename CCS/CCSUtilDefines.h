@@ -90,6 +90,15 @@
 	#define CCS_EXPORT
 #endif // CCS_WIN32
 
+/*
+ * 分隔符定义
+ */
+#ifdef CCS_WIN32
+#define CCS_OS_SEPARATE	'\\'
+#elif defined( CCS_LINUX)		// linux  实现
+#define CCS_OS_SEPARATE	'/'	
+#endif
+
 // 常用检测宏定义
 /* 检查某bit有没有被设置 */
 #ifndef CCS_BIT_ENABLED

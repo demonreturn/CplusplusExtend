@@ -17,11 +17,8 @@ private:
 	int UnLock();
 
 private:
-	CCSMutexGuardT();
-	CCSMutexGuardT( const CCSMutexGuardT&);
-	CCSMutexGuardT& operator = ( const CCSMutexGuardT&);
 
-	LOCKTYPE					m_pMutex;
+	locktype*					m_pMutex;
 };
 
 template< class locktype>

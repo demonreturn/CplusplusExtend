@@ -405,7 +405,7 @@ extern CCS_API int CCS_OS::SendUdp(
 
 	if ( SOCKET_ERROR == iRet )
 	{
-		errno == ::WSAGetLastError();
+		errno = ::WSAGetLastError();
 	}
 #elif defined( CCS_LINUX)		// linux  实现
 	int iRet = ::sendto(
@@ -539,7 +539,7 @@ extern CCS_API int CCS_OS::Listen(
 #ifdef CCS_WIN32
 	if ( SOCKET_ERROR == iRet )
 	{
-		errno == ::WSAGetLastError();
+		errno = ::WSAGetLastError();
 	}
 #elif defined( CCS_LINUX)		// linux  实现
 	if ( SOCKET_ERROR == iRet )
@@ -567,7 +567,7 @@ extern CCS_API HANDLE CCS_OS::Accept(
 
 	if ( CCS_INVALID_HANDLE == handle )
 	{
-		errno == ::WSAGetLastError();
+		errno = ::WSAGetLastError();
 	}
 
 #elif defined( CCS_LINUX)		// linux  实现

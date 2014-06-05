@@ -30,7 +30,7 @@ public:
 	virtual HANDLE Open( 
 		const char* pFileName,
 		DWORD dwFlags,
-		DWORD dwMode );
+		DWORD dwMode = CCS_DEFAULT_FILE_MODE );
 
 	virtual int Close();
 

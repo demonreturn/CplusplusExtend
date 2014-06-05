@@ -14,7 +14,7 @@ typedef enum tag_MutexAddr
 
 typedef THREAD_HANDLE CCSThreadMutex;
 
-typedef struct tag_CCSMutex
+typedef struct tag_CSMutex
 {
 	int type;
 	union 
@@ -22,31 +22,32 @@ typedef struct tag_CCSMutex
 		CCSThreadMutex thread_mutex;
 		CCS_HANDLE proc_mutex;
 	};
-} CCSMutex;
+} CSMutex;
 
 namespace CCS_OS
 {
-	int InitMutex( CCSMutex* pMutex,
-		int locktype = MUTEX_THREAD,
+	int InitMutex( CSMutex* pMutex,
+		int lockScope = MUTEX_THREAD,
 		const char* pszName = 0,
 		int* mutextype = 0,
-		LPSECURITY_ATTRIBUTES sa = 0 );
+		LPSECURITY_ATTRIBUTES sa = 0,
+		int locktype = 0 );
 
-	int DestoryMutex( CCSMutex* pMutex );
+	int DestoryMutex( CSMutex* pMutex );
 
-	int LockMutex( CCSMutex* pMutex );
+	int LockMutex( CSMutex* pMutex );
 
-	int LockMutex( CCSMutex* pMutex, int& abandoned );
+	int LockMutex( CSMutex* pMutex, int& abandoned );
 
-	int LockMutex( CCSMutex* pMutex, const CCCSTimeStamp& timeout );
+	int LockMutex( CSMutex* pMutex, const CCCSTimeStamp& timeout );
 
-	int LockMutex( CCSMutex* pMutex, const CCCSTimeStamp* timeout );
+	int LockMutex( CSMutex* pMutex, const CCCSTimeStamp* timeout );
 
-	int TryLockMutex( CCSMutex* pMutex );
+	int TryLockMutex( CSMutex* pMutex );
 
-	int TryLockMutex( CCSMutex* pMutex, int& abandoned );
+	int TryLockMutex( CSMutex* pMutex, int& abandoned );
 
-	int UnLockMutex( CCSMutex* pMutex );
+	int UnLockMutex( CSMutex* pMutex );
 
 /*****************************************************************************/
 // A set of wrappers for mutex locks end

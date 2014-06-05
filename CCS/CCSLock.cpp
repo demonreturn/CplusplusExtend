@@ -1,6 +1,6 @@
 #include "CCSLock.h"
 
-int CCS_OS::DestoryMutex( CCSMutex* pMutex )
+int CCS_OS::DestoryMutex( CSMutex* pMutex )
 {
 	if ( NULL == pMutex )
 	{
@@ -30,7 +30,13 @@ int CCS_OS::DestoryMutex( CCSMutex* pMutex )
 #endif
 }
 
-int CCS_OS::InitMutex( CCSMutex* pMutex, int locktype /*= MUTEX_THREAD*/, const char* pszName /*= 0*/, int* mutextype /*= 0*/, LPSECURITY_ATTRIBUTES sa /*= 0 */ )
+int CCS_OS::InitMutex( 
+	CSMutex* pMutex,
+	int lockScope /*= MUTEX_THREAD*/,
+	const char* pszName /*= 0*/,
+	int* mutextype /*= 0*/,
+	LPSECURITY_ATTRIBUTES sa /*= 0*/,
+	int locktype )
 {
 	if ( NULL == pMutex )
 	{
@@ -38,8 +44,8 @@ int CCS_OS::InitMutex( CCSMutex* pMutex, int locktype /*= MUTEX_THREAD*/, const 
 	}
 
 #ifdef CCS_WIN32
-	pMutex->type = locktype;
-	switch ( locktype )
+	pMutex->type = lockScope;
+	switch ( lockScope )
 	{
 	case MUTEX_PROCESS:
 		{
@@ -55,10 +61,11 @@ int CCS_OS::InitMutex( CCSMutex* pMutex, int locktype /*= MUTEX_THREAD*/, const 
 			return ThreadMutexInit(
 				&(pMutex->thread_mutex),
 				locktype,
-				pszName );
+				pszName,
+				mutextype );
 		}
 		break;
-	default:
+		default:
 		return -1;
 		break;
 	}
@@ -69,7 +76,7 @@ int CCS_OS::InitMutex( CCSMutex* pMutex, int locktype /*= MUTEX_THREAD*/, const 
 #endif
 }
 
-int CCS_OS::LockMutex( CCSMutex* pMutex )
+int CCS_OS::LockMutex( CSMutex* pMutex )
 {
 	if ( NULL == pMutex )
 	{
@@ -112,7 +119,7 @@ int CCS_OS::LockMutex( CCSMutex* pMutex )
 #endif
 }
 
-int CCS_OS::LockMutex( CCSMutex* pMutex, int& abandoned )
+int CCS_OS::LockMutex( CSMutex* pMutex, int& abandoned )
 {
 	if ( NULL == pMutex )
 	{
@@ -157,7 +164,7 @@ int CCS_OS::LockMutex( CCSMutex* pMutex, int& abandoned )
 #endif
 }
 
-int CCS_OS::LockMutex( CCSMutex* pMutex, const CCCSTimeStamp& timeout )
+int CCS_OS::LockMutex( CSMutex* pMutex, const CCCSTimeStamp& timeout )
 {
 	if ( NULL == pMutex )
 	{
@@ -206,7 +213,7 @@ int CCS_OS::LockMutex( CCSMutex* pMutex, const CCCSTimeStamp& timeout )
 #endif
 }
 
-int CCS_OS::LockMutex( CCSMutex* pMutex, const CCCSTimeStamp* timeout )
+int CCS_OS::LockMutex( CSMutex* pMutex, const CCCSTimeStamp* timeout )
 {
 	if ( NULL == pMutex )
 	{
@@ -221,7 +228,7 @@ int CCS_OS::LockMutex( CCSMutex* pMutex, const CCCSTimeStamp* timeout )
 #endif
 }
 
-int CCS_OS::TryLockMutex( CCSMutex* pMutex )
+int CCS_OS::TryLockMutex( CSMutex* pMutex )
 {
 	if ( NULL == pMutex )
 	{
@@ -262,7 +269,7 @@ int CCS_OS::TryLockMutex( CCSMutex* pMutex )
 #endif
 }
 
-int CCS_OS::TryLockMutex( CCSMutex* pMutex, int& abandoned )
+int CCS_OS::TryLockMutex( CSMutex* pMutex, int& abandoned )
 {
 	if ( NULL == pMutex )
 	{
@@ -306,7 +313,7 @@ int CCS_OS::TryLockMutex( CCSMutex* pMutex, int& abandoned )
 #endif
 }
 
-int CCS_OS::UnLockMutex( CCSMutex* pMutex )
+int CCS_OS::UnLockMutex( CSMutex* pMutex )
 {
 	if ( NULL == pMutex )
 	{

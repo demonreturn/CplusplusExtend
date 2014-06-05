@@ -9,7 +9,7 @@ namespace CCS_OS
 {
 	const unsigned long OS_MAX_PROCESS_CMD_LEN = 1024;
 
-	long GetProcessID()
+	inline long GetProcessID()
 	{
 #ifdef CCS_WIN32
 		return ::GetCurrentProcessId();
@@ -18,7 +18,7 @@ namespace CCS_OS
 #endif
 	}
 
-	const char* GetExecName()
+	inline const char* GetExecName()
 	{
 		static char s_szCmd[ OS_MAX_PROCESS_CMD_LEN ] = { 0 };
 
@@ -109,7 +109,7 @@ namespace CCS_OS
 		return s_pszCmd;
 	}
 
-	const char* GetProcessName()
+	inline const char* GetProcessName()
 	{
 		const char* pExeName = GetExecName();
 		if ( NULL != pExeName )
@@ -135,7 +135,7 @@ namespace CCS_OS
 		}
 	}
 
-	const char* GetExecDir()
+	inline const char* GetExecDir()
 	{
 		static char s_exExecDir[OS_MAX_PROCESS_CMD_LEN] = { 0 };
 		static char* s_pexExecDir = NULL;
@@ -147,7 +147,7 @@ namespace CCS_OS
 
 			const char* poffset = ::strstr( pszExecCmdName, pszProcessName );
 
-			::strncpy( s_exExecDir, pszExecCmdName, poffset - pszExecCmdName );
+			::strncpy_s( s_exExecDir, pszExecCmdName, poffset - pszExecCmdName );
 
 			s_pexExecDir = s_exExecDir;
 		}
@@ -155,7 +155,7 @@ namespace CCS_OS
 		return s_pexExecDir;
 	}
 
-	int SetProcessPriority( CCS_HANDLE prohandle, DWORD dwPriority )
+	inline int SetProcessPriority( CCS_HANDLE prohandle, DWORD dwPriority )
 	{
 #ifdef CCS_WIN32
 		BOOL bRet = ::SetPriorityClass( prohandle, dwPriority );
@@ -167,7 +167,7 @@ namespace CCS_OS
 #endif
 	}
 
-	DWORD GetProcessPriority( CCS_HANDLE prohandle )
+	inline DWORD GetProcessPriority( CCS_HANDLE prohandle )
 	{
 #ifdef CCS_WIN32
 		return ::GetPriorityClass( prohandle );
