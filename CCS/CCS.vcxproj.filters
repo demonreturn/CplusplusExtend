@@ -126,6 +126,27 @@
     <ClInclude Include="CCSOS.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CSCFileChannel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSTraceDefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSTraceFormator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSLocalDateTime.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSTimeSpan.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSDateTime.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CSTimeZone.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CCS.rc">
@@ -179,6 +200,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CSMutex.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSCFileChannel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSTraceFormator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSLocalDateTime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSTimeSpan.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSDateTime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CSTimeZone.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

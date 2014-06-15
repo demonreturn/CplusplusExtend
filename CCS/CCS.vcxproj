@@ -98,11 +98,14 @@
     <ClInclude Include="CCSTimeStamp.h" />
     <ClInclude Include="CCSTimeValue.h" />
     <ClInclude Include="CCSUtilDefines.h" />
+    <ClInclude Include="CSCFileChannel.h" />
     <ClInclude Include="CSChannel.h" />
     <ClInclude Include="CSDataBlock.h" />
+    <ClInclude Include="CSDateTime.h" />
     <ClInclude Include="CSFile.h" />
     <ClInclude Include="CSFileImplFactory.h" />
     <ClInclude Include="CSFormatter.h" />
+    <ClInclude Include="CSLocalDateTime.h" />
     <ClInclude Include="CSLogger.h" />
     <ClInclude Include="CCSOSShareMemory.h" />
     <ClInclude Include="CSLogMessage.h" />
@@ -110,6 +113,10 @@
     <ClInclude Include="CSRegularFileImpl.h" />
     <ClInclude Include="CSShareMemory.h" />
     <ClInclude Include="CSShareVariantT.h" />
+    <ClInclude Include="CSTimeSpan.h" />
+    <ClInclude Include="CSTimeZone.h" />
+    <ClInclude Include="CSTraceDefine.h" />
+    <ClInclude Include="CSTraceFormator.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -123,15 +130,21 @@
     <ClCompile Include="CCSSocket.cpp" />
     <ClCompile Include="CCSTimeStamp.cpp" />
     <ClCompile Include="CCSTimeValue.cpp" />
+    <ClCompile Include="CSCFileChannel.cpp" />
     <ClCompile Include="CSDataBlock.cpp" />
+    <ClCompile Include="CSDateTime.cpp" />
     <ClCompile Include="CSFile.cpp" />
     <ClCompile Include="CSFileImplFactory.cpp" />
+    <ClCompile Include="CSLocalDateTime.cpp" />
     <ClCompile Include="CSLogger.cpp" />
     <ClCompile Include="CCSOSShareMemory.cpp" />
     <ClCompile Include="CSLogMessage.cpp" />
     <ClCompile Include="CSMutex.cpp" />
     <ClCompile Include="CSRegularFileImpl.cpp" />
     <ClCompile Include="CSShareMemory.cpp" />
+    <ClCompile Include="CSTimeSpan.cpp" />
+    <ClCompile Include="CSTimeZone.cpp" />
+    <ClCompile Include="CSTraceFormator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
